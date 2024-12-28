@@ -870,7 +870,9 @@
     box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5);
 }
 
-
+#chatMessages{
+  height: 50%;
+}
     </style>
   </head>
 
@@ -879,10 +881,10 @@
     <main>
       <section class="hero">
         <div class="maintxt">
-          <h1>Reduce, Recycle, Re-think</h1>
+          <h1>Reduce, Recycle, Reuse</h1>
           <p>Join Us in Creating a Sustainable Future.</p>
 
-          <button class="cta-btn">Learn More</button>
+          <button class="cta-btn" id="learn-more">Learn More</button>
         </div>
       </section>
       <section class="w-full py-12 md:py-24 lg:py-32 bg-muted blog">
@@ -1145,7 +1147,7 @@
                 </svg>
             </button>
         </div>
-        <div id="chatMessages" class="h-48 overflow-y-auto mb-2 txt"></div>
+        <div id="chatMessages" class=" 	 overflow-y-auto mb-2 txt"></div>
         <div class="flex" style="margin-top:26vh ;">
             <input id="chatInput" type="text" class=" txt flex-grow mr-2 py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Type your message...">
             <button id="sendChatBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
@@ -1248,6 +1250,10 @@ async function getAIResponse(message) {
     return 'Sorry, I couldn\'t process your request at the moment. Please try again later.';
   }
 }
+const lm = document.getElementById('learn-more');
+lm.addEventListener('click',()=>{
+  window.location.href="/blog"
+});
 
       </script>
   </body>

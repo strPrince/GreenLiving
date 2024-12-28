@@ -13,7 +13,7 @@ try{
    console.log(`mongo db connected : ${con.connection.host}/${con.connection.db.databaseName}`);
    
 }catch(error){
-console.error('erroer');
+console.error('error');
 
 }
 }

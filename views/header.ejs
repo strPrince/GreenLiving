@@ -246,46 +246,100 @@
                     <img src="https://cdn-icons-png.freepik.com/256/17123/17123527.png?ga=GA1.1.190826024.1720511253&semt=ais_hybrid" alt="Shopping Cart">
                 </button>
             <% } else { %>
-                <a href="login"><button
-                        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+                <a href="login" class="inline-block">
+                    <button
+                        class="border-black inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background text-foreground transition-all duration-300 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground active:scale-95 disabled:pointer-events-none disabled:opacity-50 h-10 px-6 py-2">
                         Log in
-                    </button></a>
+                    </button>
+                </a>
+                
                 <button
                     class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2">
                     Guest!
                 </button>
             <% } %>
             <div class="dark-mode-toggle">
-                <button id="darkModeToggle" class="dark-mode-toggle-input">Dark Mode</button>
+                <button id="darkModeToggle" class="dark-mode-toggle-input p-2 focus:outline-none">
+                    <!-- Default Moon Icon for Dark Mode -->
+                    <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c.132 0 .264.003.396.009a9 9 0 0 0 8.285 8.285A9.003 9.003 0 0 1 12 21a9 9 0 0 1 0-18z" />
+                    </svg>
+                    <!-- Hidden Sun Icon for Light Mode -->
+                    <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-foreground hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m8.66-12.66l-.707.707M5.34 5.34l-.707.707m0 10.606l.707.707m12.02-1.414l.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0zm5 0h-1m-16 0H4m12.66 7.66l-.707-.707M5.34 18.66l-.707-.707" />
+                    </svg>
+                </button>
             </div>
+            
+            
         </nav>
         </div>
     </header>
     <script>
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const hamburger = document.getElementById('hamburger');
-        const nav = document.getElementById('nav');
+       const darkModeToggle = document.getElementById('darkModeToggle');
+const hamburger = document.getElementById('hamburger');
+const nav = document.getElementById('nav');
+const moonIcon = document.getElementById('moonIcon');
+const sunIcon = document.getElementById('sunIcon');
 
-        function toggleDarkMode() {
-            const body = document.body;
-            body.classList.toggle('dark-mode');
-            const isDarkMode = body.classList.contains('dark-mode');
-            localStorage.setItem('darkMode', isDarkMode);
-            darkModeToggle.checked = isDarkMode;
-        }
+// Toggle dark mode and icons
+function toggleDarkMode() {
+    const body = document.body;
+    body.classList.toggle('dark-mode');
+    const isDarkMode = body.classList.contains('dark-mode');
+    
+    // Store preference in localStorage
+    localStorage.setItem('darkMode', isDarkMode);
+    
+    // Update the toggle button and icons
+    darkModeToggle.checked = isDarkMode;
+    if (isDarkMode) {
+        moonIcon.classList.add('hidden');
+        sunIcon.classList.remove('hidden');
+    } else {
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+    }
+}
 
-        function applyDarkModePreference() {
-            const isDarkMode = localStorage.getItem('darkMode') === 'true';
-            const body = document.body;
-            if (isDarkMode) {
-                body.classList.add('dark-mode');
-            } else {
-                body.classList.remove('dark-mode');
-            }
-            if (darkModeToggle) {
-                darkModeToggle.checked = isDarkMode;
-            }
-        }
+// Apply dark mode preference from localStorage
+function applyDarkModePreference() {
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    const body = document.body;
+
+    // Apply the dark mode class if preference is set
+    if (isDarkMode) {
+        body.classList.add('dark-mode');
+        moonIcon.classList.add('hidden');
+        sunIcon.classList.remove('hidden');
+    } else {
+        body.classList.remove('dark-mode');
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+    }
+    
+    // Sync the toggle button with the current mode
+    if (darkModeToggle) {
+        darkModeToggle.checked = isDarkMode;
+    }
+}
+
+// Handle hamburger menu toggle
+hamburger.addEventListener('click', () => {
+    nav.classList.toggle('hidden');  // Show or hide the navigation
+});
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    if (darkModeToggle) {
+        // Apply the user's dark mode preference
+        applyDarkModePreference();
+        
+        // Attach event listener to the dark mode toggle button
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+    }
+});
+
 
         document.addEventListener('DOMContentLoaded', () => {
             if (darkModeToggle) {
@@ -310,6 +364,7 @@
     }
   });
 }
+
         // Add cancel button
 
             const dropdownToggle = document.querySelector('.dropdown-toggle');

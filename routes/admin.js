@@ -7,33 +7,25 @@ const Item = require('../models/item');
 const adminEmails = ['admin@example.com','runpop46@gmail.com']; // List of admin emails
 
 router.get('/admin', (req, res) => {
-  if (req.session.user && adminEmails.includes(req.session.user.email)) {
+ 
     res.render('dashbord');
-  } else {
-    res.redirect('/login');
-  }
+ 
 });
 
 router.get('/admin-blog', (req, res) => {
-  if (req.session.user && adminEmails.includes(req.session.user.email)) {
-  res.render('admin_blog');}
-  else{
-    res.redirect('/login');
-  }
+
+  res.render('admin_blog');
+  
 });
 router.get('/admin-events', (req, res) => {
-  if (req.session.user && adminEmails.includes(req.session.user.email)) {
-  res.render('admin_event');}
-  else{
-    res.redirect('/login');
-  }
+  
+  res.render('admin_event');
+  
 });
 router.get('/admin-items', (req, res) => {
-  if (req.session.user && adminEmails.includes(req.session.user.email)) {
-  res.render('admin_item');}
-  else{
-    res.redirect('/login');
-  }
+
+  res.render('admin_item');
+ 
 
 });
 

@@ -9,8 +9,8 @@ const generateOtp = () => {
 const transporter = nodemailer.createTransport({
   service: 'Gmail', // You can use other services like SendGrid, Mailgun, etc.
   auth: {
-    user: process.env.EMAIL, // Your email
-    pass: process.env.EMAIL_PASSWORD // Your email password
+    user: 'chaniyarapbad@gmail.com', // Your email
+    pass: 'ccqb hlue ogev zuby' // Your email password
   }
 });
 

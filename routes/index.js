@@ -130,7 +130,7 @@ router.get('/home', async (req, res) => {
     ]);
 
     res.render('index', { blogs: data, events: events, items: items, user: req.session.user });
-    console.log({ data, events, items });
+
   } catch (error) {
     console.error('Error fetching data:', error);
     res.status(500).json({ error: 'Internal Server Error' });

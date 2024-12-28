@@ -43,7 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({
-  secret: 'your secret key',
+  secret: '3  4i039705394594',
   resave: false,
   saveUninitialized: false
 }));
@@ -72,6 +72,8 @@ app.get('/signup', (req, res) => res.render('signup'));
 app.get('/hi', (req, res) => res.send("hello world"));
 app.get('/try', (req, res) => res.render('try'));
 app.get('/ev', (req, res) => res.render('event'));
+app.get('/chat', (req, res) => res.render('chat'));
+app.get('/', (req, res) => res.render('404'));
 app.get('/about', (req, res) => res.render('about',{user: req.session.user}));
 app.get('/cart', (req, res) => {
   res.render('cart');
@@ -117,6 +119,38 @@ app.get('/shop', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+const io = require('socket.io')(3000, {
+  cors: {
+    origin: "*", // Allow all origins. Change this to your specific origin for better security.
+    methods: ["GET", "POST"]
+  }
+});
+
+
+const users = {}
+
+io.on('connection', socket => {
+socket.on('new-user', name => {
+  users[socket.id] = name
+  socket.broadcast.emit('user-connected', name)
+})
+socket.on('send-chat-message', message => {
+  
+  
+  socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] })
+})
+socket.on('disconnect', () => {
+  socket.broadcast.emit('user-disconnected', users[socket.id])
+  delete users[socket.id]
+})
+})
+
+const http = require('http').createServer();
+http.listen(3000, '0.0.0.0');
+
+
 app.get('/checkout', async(req, res) => {
   
   res.render('checkout');
@@ -259,16 +293,6 @@ app.get('/order-history', async (req, res) => {
 
 
 
-// app.post('/save-orders', async (req, res) => {
-//   try {
-//       const { orders } = req.body;
-//       // Process and save orders
-//       res.status(200).json({ success: true });
-//   } catch (error) {
-//       console.error('Error saving orders:', error);
-//       res.status(500).json({ success: false });
-//   }
-// });
 
 app.post('/save-orders', async (req, res) => {
   try {
@@ -291,36 +315,6 @@ app.post('/save-orders', async (req, res) => {
   }
 });
 
-// router.delete('/clear-orders', async (req, res) => {
-//   try {
-//     const result = await Order.deleteMany({});
-//     if (result.deletedCount === 0) {
-//         return res.status(404).json({ message: 'No orders found to delete.' });
-//     }
-//     res.status(200).json({ message: 'All orders cleared successfully.', deletedCount: result.deletedCount });
-// } catch (error) {
-//     console.error('Error clearing orders:', error);
-//     res.status(500).json({ message: 'Error clearing orders.', error });
-// }
-// });
-
-
-
-
-// Assuming user authentication is handled and userId is available from session or token
-
-
-
-// Get user profile
-
-// app.get('/U_Profile', async (req, res) => {
-//   try {
-//     res.render('U_Profile');
-//   } catch (error) {
-//     console.error('Error rendering view:', error);
-//     res.status(500).send('Internal Server Error');
-//   }
-// });
 
 
 
